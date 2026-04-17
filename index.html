@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="googlebot" content="noindex,nofollow">
+<title>プロジェクト推進体制のご提案 — 要件定義フェーズに向けて</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4f2ed;
+    --paper:#ffffff;
+    --ink:#1c2b4a;
+    --ink-soft:#3a4a6b;
+    --sub:#6b7891;
+    --line:#d8dbe3;
+    --coral:#e8604d;
+    --coral-soft:#fadcd5;
+    --teal:#4fb3b0;
+    --teal-soft:#d8ede c;
+    --teal-bg:#eaf5f4;
+    --mute:#c9cdd4;
+    --mute-bg:#ebe9e3;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Noto Sans JP',-apple-system,BlinkMacSystemFont,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.7;
+    font-size:15px;
+  }
+
+  /* Layout */
+  .page{
+    max-width:960px;margin:0 auto;padding:0 28px 120px;
+  }
+
+  /* Cover */
+  header.cover{
+    padding:96px 28px 64px;
+    background:
+      radial-gradient(ellipse at top right, rgba(79,179,176,.12), transparent 60%),
+      radial-gradient(ellipse at bottom left, rgba(232,96,77,.08), transparent 60%),
+      var(--bg);
+    border-bottom:1px solid var(--line);
+    position:relative;overflow:hidden;
+  }
+  header.cover::before{
+    content:"";position:absolute;inset:0;
+    background-image:
+      linear-gradient(to right, rgba(28,43,74,.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(28,43,74,.06) 1px, transparent 1px);
+    background-size:40px 40px;
+    mask:radial-gradient(circle at 70% 30%, black 0%, transparent 70%);
+  }
+  header.cover .inner{max-width:960px;margin:0 auto;position:relative}
+  header.cover h1{
+    font-size:44px;font-weight:900;line-height:1.35;margin-bottom:18px;
+    letter-spacing:.01em;
+  }
+  header.cover h1 .sub{display:block;font-size:26px;color:var(--ink-soft);margin-top:8px;font-weight:700}
+  header.cover .underline{width:72px;height:4px;background:var(--coral);margin:22px 0 22px}
+  header.cover .lead{font-size:18px;font-weight:700;color:var(--ink-soft);letter-spacing:.03em;margin-bottom:36px}
+  header.cover .meta{
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:13px;color:var(--sub);border-top:1px solid var(--line);padding-top:16px;margin-top:24px;
+  }
+  header.cover .meta .msg{color:var(--teal);font-weight:700}
+
+  /* Sections */
+  section{
+    margin-top:64px;scroll-margin-top:24px;
+  }
+  section.sec{}
+  .sec-head{
+    display:flex;align-items:baseline;gap:14px;margin-bottom:20px;
+    border-bottom:2px solid var(--ink);padding-bottom:12px;
+  }
+  .sec-head .num{
+    font-family:"Georgia",serif;font-size:14px;font-weight:700;color:var(--coral);
+    letter-spacing:.15em;
+  }
+  .sec-head h2{font-size:26px;font-weight:900;color:var(--ink);letter-spacing:.01em}
+  .sec-intro{color:var(--ink-soft);font-size:15px;margin-bottom:20px}
+
+  /* Highlight banner */
+  .banner{
+    margin-top:22px;padding:14px 22px;border-radius:8px;
+    font-weight:700;font-size:15px;text-align:center;
+  }
+  .banner.teal{background:var(--teal-bg);color:var(--ink);border-left:4px solid var(--teal)}
+  .banner.coral{background:var(--coral-soft);color:var(--ink);border-left:4px solid var(--coral)}
+  .banner.ink{background:var(--ink);color:#fff}
+
+  /* Checklist (goals / agreements) */
+  ul.check{list-style:none;padding:0;display:flex;flex-direction:column;gap:10px}
+  ul.check li{
+    display:flex;gap:14px;align-items:flex-start;
+    padding:14px 18px;background:var(--paper);border:1px solid var(--line);border-radius:8px;
+    font-weight:700;font-size:15.5px;
+  }
+  ul.check li.done{color:var(--sub);background:transparent}
+  ul.check li .box{
+    width:22px;height:22px;border:2px solid var(--ink);border-radius:4px;
+    display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;
+  }
+  ul.check li.done .box{border-color:var(--sub)}
+  ul.check li.done .box::after{content:"✓";color:var(--sub);font-size:14px;font-weight:900}
+  ul.check li.agreed .box{background:var(--coral);border-color:var(--coral)}
+  ul.check li.agreed .box::after{content:"✓";color:#fff;font-size:14px;font-weight:900}
+
+  /* Skills two-col */
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  .card{
+    padding:24px 24px 20px;border-radius:10px;background:var(--paper);
+    border:1px solid var(--line);
+  }
+  .card.before{background:var(--mute-bg)}
+  .card.after{border:2.5px solid var(--coral)}
+  .card h3{font-size:18px;font-weight:900;margin-bottom:10px}
+  .card.before h3{color:var(--ink-soft)}
+  .card.after h3{color:var(--coral)}
+  .card ul{list-style:none;padding:0;margin:10px 0 16px}
+  .card ul li{padding:5px 0 5px 18px;position:relative;font-weight:700;font-size:14.5px}
+  .card.before ul li::before{content:"●";color:var(--ink-soft);position:absolute;left:0;top:5px;font-size:9px}
+  .card.after ul li::before{content:"●";color:var(--coral);position:absolute;left:0;top:5px;font-size:9px}
+  .card .who{font-size:12.5px;color:var(--sub);line-height:1.7;padding-top:12px;border-top:1px dashed var(--line)}
+  .card .who b{color:var(--ink);font-weight:700}
+
+  /* Gantt */
+  .gantt{
+    display:grid;grid-template-columns:220px 1fr;gap:8px 14px;
+    background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:18px 22px;
+  }
+  .gantt-head{
+    grid-column:2/3;display:grid;grid-template-columns:repeat(6,1fr);
+    font-size:12px;font-weight:700;color:var(--ink-soft);
+    border-bottom:1.5px solid var(--line);padding-bottom:6px;margin-bottom:4px;
+  }
+  .gantt-row{display:contents}
+  .gantt-row .lbl{
+    font-size:13px;font-weight:700;color:var(--ink);display:flex;align-items:center;padding:4px 0;
+  }
+  .gantt-row .bar-wrap{position:relative;height:28px;border-bottom:1px dashed #e1e4ea}
+  .bar{
+    position:absolute;top:3px;bottom:3px;border-radius:4px;color:#fff;font-size:11.5px;font-weight:700;
+    display:flex;align-items:center;padding:0 10px;white-space:nowrap;overflow:hidden;
+  }
+  .bar.dark{background:var(--ink)}
+  .bar.teal{background:var(--teal)}
+  .bar.coral{background:var(--coral)}
+  .bar.gray{background:#9aa1b0}
+
+  /* Notes */
+  .notes{
+    margin-top:18px;padding:16px 20px;background:var(--paper);border:1px solid var(--line);border-radius:8px;
+  }
+  .notes h4{font-size:14px;font-weight:900;margin-bottom:6px;color:var(--ink)}
+  .notes ul{list-style:none;padding:0}
+  .notes ul li{font-size:13px;padding:3px 0 3px 22px;position:relative}
+  .notes ul li::before{content:"✓";color:var(--teal);font-weight:900;position:absolute;left:0;top:2px}
+
+  /* Org chart block */
+  .org-block{
+    background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:22px;
+    display:grid;grid-template-columns:1.1fr .9fr;gap:26px;align-items:stretch;
+  }
+  .org-block.reverse{grid-template-columns:.9fr 1.1fr}
+  .org-block .title-pill{
+    display:inline-block;padding:4px 12px;background:var(--mute-bg);color:var(--ink-soft);
+    font-size:12px;font-weight:700;border-radius:14px;margin-bottom:10px;
+  }
+  .org-svg{width:100%;height:auto;display:block}
+  .legend-note{
+    margin-top:12px;padding:8px 12px;background:#efede7;border-radius:6px;
+    font-size:11.5px;color:var(--sub);line-height:1.5;
+  }
+  .excluded-box{
+    margin-top:14px;padding:12px 16px;background:#efede7;
+    border-left:4px solid #c9cdd4;border-radius:6px;
+  }
+  .excluded-box .tag{
+    font-size:11px;color:var(--sub);font-weight:700;letter-spacing:.05em;margin-bottom:6px;
+  }
+  .excluded-box .item{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .excluded-box .name{
+    font-size:14.5px;font-weight:900;color:#7a8294;
+    padding:4px 12px;background:#dcdad3;border-radius:4px;letter-spacing:.02em;
+  }
+  .excluded-box .note{font-size:12px;color:var(--sub);line-height:1.6}
+
+  /* Argument points */
+  .argue{
+    background:var(--paper);border:1px solid var(--ink);border-left:5px solid var(--coral);
+    border-radius:8px;padding:20px 24px;
+  }
+  .argue h4{font-size:15px;font-weight:900;color:var(--coral);margin-bottom:10px}
+  .argue ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:8px}
+  .argue li{
+    padding:4px 0 4px 20px;position:relative;font-size:14px;line-height:1.75;
+  }
+  .argue li::before{
+    content:"●";color:var(--coral);position:absolute;left:0;top:5px;font-size:10px;
+  }
+  .argue li.keep::before{color:var(--sub)}
+  .argue li b{font-weight:900;color:var(--ink)}
+
+  /* Role table */
+  table.t{
+    width:100%;border-collapse:collapse;background:var(--paper);
+    border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:14.5px;
+  }
+  table.t thead{background:var(--ink);color:#fff}
+  table.t th{padding:12px 16px;text-align:left;font-weight:700;font-size:14px;letter-spacing:.02em}
+  table.t td{padding:12px 16px;border-bottom:1px solid var(--line);color:var(--ink);vertical-align:top}
+  table.t tr:last-child td{border-bottom:none}
+  table.t tr.lead td{background:var(--teal-bg);font-weight:700}
+  table.t tr.out td{
+    background:repeating-linear-gradient(45deg,#efede7,#efede7 6px,#e6e3dc 6px,#e6e3dc 12px);
+    color:var(--sub);
+  }
+  table.t tr td:first-child{font-weight:700;white-space:nowrap}
+
+  /* Hearing flow */
+  .flow{display:grid;grid-template-columns:1fr 30px 1fr 30px 1fr;gap:8px;align-items:stretch;margin:20px 0 0}
+  .flow-step{
+    background:var(--paper);border:1.5px solid var(--line);border-radius:10px;padding:18px 16px;
+    display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;
+  }
+  .flow-step .icon{font-size:26px}
+  .flow-step .txt{font-size:13.5px;font-weight:700;line-height:1.5}
+  .flow-step .note{font-size:11.5px;color:var(--sub);line-height:1.5}
+  .flow-arrow{align-self:center;color:var(--coral);font-size:22px;font-weight:900;text-align:center}
+
+  /* Reporting pyramid */
+  .rep-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:26px;align-items:center}
+  .pyramid-svg{width:100%;max-width:300px;margin:0 auto;display:block}
+
+  /* Agree box */
+  .agree{
+    display:flex;gap:16px;align-items:center;
+    padding:18px 22px;background:var(--paper);border:2px solid var(--line);border-radius:12px;
+  }
+  .agree + .agree{margin-top:12px}
+  .agree .mark{
+    width:30px;height:30px;border-radius:50%;background:var(--coral);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;flex-shrink:0;
+  }
+  .agree .tag{font-size:11.5px;color:var(--sub);font-weight:700;letter-spacing:.04em}
+  .agree .body{font-size:17px;font-weight:900;color:var(--ink);line-height:1.5;margin-top:2px}
+
+  /* TOC */
+  .toc{
+    margin-top:40px;padding:18px 24px;background:var(--paper);border:1px solid var(--line);
+    border-radius:10px;
+  }
+  .toc h3{font-size:13px;color:var(--sub);font-weight:700;margin-bottom:10px;letter-spacing:.1em}
+  .toc ol{list-style:none;padding:0;counter-reset:toc}
+  .toc ol li{
+    counter-increment:toc;padding:4px 0;font-size:14px;
+  }
+  .toc ol li a{color:var(--ink);text-decoration:none;font-weight:700}
+  .toc ol li a:hover{color:var(--coral)}
+  .toc ol li::before{
+    content:counter(toc,decimal-leading-zero) "  ";color:var(--coral);font-weight:700;font-family:"Georgia",serif;
+  }
+
+  @media (max-width:780px){
+    header.cover h1{font-size:30px}
+    header.cover h1 .sub{font-size:18px}
+    .two{grid-template-columns:1fr}
+    .org-block,.org-block.reverse{grid-template-columns:1fr}
+    .rep-grid{grid-template-columns:1fr}
+    .flow{grid-template-columns:1fr;gap:6px}
+    .flow-arrow{transform:rotate(90deg)}
+    .gantt{grid-template-columns:1fr}
+    .gantt-head{display:none}
+    .gantt-row .lbl{padding-top:10px}
+  }
+</style>
+</head>
+<body>
+
+<header class="cover">
+  <div class="inner">
+    <h1>プロジェクト推進体制のご提案
+      <span class="sub">— 要件定義フェーズに向けて</span>
+    </h1>
+    <div class="underline"></div>
+    <div class="lead">〜 新フェーズに合わせた最適体制への移行 〜</div>
+    <div class="meta">
+      <div>2026-04-17 / ジャングルジム株式会社</div>
+      <div class="msg">成功確率を最大化するための体制最適化のご相談です</div>
+    </div>
+    <div class="toc">
+      <h3>目次</h3>
+      <ol>
+        <li><a href="#s1">本日のゴール</a></li>
+        <li><a href="#s2">フェーズ移行による「必要スキル」の変化</a></li>
+        <li><a href="#s3">開発全体ロードマップ（4.5ヶ月）</a></li>
+        <li><a href="#s4">現体制の構造（Before）</a></li>
+        <li><a href="#s5">提案する新体制（After）</a></li>
+        <li><a href="#s6">各メンバーの役割再定義</a></li>
+        <li><a href="#s7">要件定義ヒアリングスケジュール</a></li>
+        <li><a href="#s8">レポーティング設計</a></li>
+        <li><a href="#s9">本日お願いしたい合意事項</a></li>
+      </ol>
+    </div>
+  </div>
+</header>
+
+<main class="page">
+
+  <!-- ─── 1 ─── -->
+  <section class="sec" id="s1">
+    <div class="sec-head"><span class="num">01</span><h2>本日のゴール — これからの進め方</h2></div>
+    <ul class="check">
+      <li class="done"><span class="box"></span>合意形成・見積合意はすでに完了。ここから要件定義・実装フェーズに入る</li>
+      <li><span class="box"></span>新フェーズの進め方を共有する</li>
+      <li><span class="box"></span>新フェーズに最適な推進体制への合意をいただく</li>
+      <li><span class="box"></span>各メンバーの役割・責任範囲を再定義する</li>
+      <li><span class="box"></span>要件定義スケジュール・レポーティング設計を確定する</li>
+    </ul>
+    <div class="banner teal">フェーズが切り替わるタイミングで、体制を最適化させてください</div>
+  </section>
+
+  <!-- ─── 2 ─── -->
+  <section class="sec" id="s2">
+    <div class="sec-head"><span class="num">02</span><h2>フェーズ移行による「必要スキル」の変化</h2></div>
+    <div class="two">
+      <div class="card before">
+        <h3>フェーズ1（これまで・完了）</h3>
+        <ul>
+          <li>合意形成・ロジカル詰め</li>
+          <li>契約・見積精査</li>
+          <li>リスクの網羅的洗い出し</li>
+          <li>経営視点での承認</li>
+        </ul>
+        <div class="who"><b>担い手：</b>田川さん・早苗さん・木村さん（外部・ロジカル詰め担当）</div>
+      </div>
+      <div class="card after">
+        <h3>フェーズ2〜（これから）</h3>
+        <ul>
+          <li>実務の解像度・現場感覚</li>
+          <li>UX の違和感の察知</li>
+          <li>日次 FB・高速な判断</li>
+          <li>使ってみた実感値の反映</li>
+        </ul>
+        <div class="who"><b>担い手：</b>現場担当者（永井・榊・内村）＋ 早苗さん（統括）</div>
+      </div>
+    </div>
+    <div class="banner coral">「合理性詰め型」から「実務詳細詰め型」へ。求められる情報の粒度が根本的に変わります</div>
+  </section>
+
+  <!-- ─── 3 ─── -->
+  <section class="sec" id="s3">
+    <div class="sec-head"><span class="num">03</span><h2>開発全体ロードマップ（4.5ヶ月）</h2></div>
+    <div class="gantt">
+      <div></div>
+      <div class="gantt-head">
+        <div>〜3月末</div><div>4月</div><div>5月</div><div>6月</div><div>7月</div><div>8月</div>
+      </div>
+      <div class="gantt-row"><div class="lbl">① プロジェクト検討期間</div><div class="bar-wrap"><div class="bar gray" style="left:0%;width:17%">検討期間</div></div></div>
+      <div class="gantt-row"><div class="lbl">② 要件定義（4/10 – 5月末）</div><div class="bar-wrap"><div class="bar dark" style="left:22%;width:30%">要件定義</div></div></div>
+      <div class="gantt-row"><div class="lbl">③ フロントエンド Phase1</div><div class="bar-wrap"><div class="bar teal" style="left:38%;width:18%">FE Phase1（要件確定用）</div></div></div>
+      <div class="gantt-row"><div class="lbl">④ バックエンド</div><div class="bar-wrap"><div class="bar dark" style="left:38%;width:32%">バックエンド</div></div></div>
+      <div class="gantt-row"><div class="lbl">⑤ フロントエンド Phase2</div><div class="bar-wrap"><div class="bar teal" style="left:58%;width:12%">FE Phase2（本番向け）</div></div></div>
+      <div class="gantt-row"><div class="lbl">⑥ テスト（7/10 – 7/24）</div><div class="bar-wrap"><div class="bar dark" style="left:74%;width:10%">テスト</div></div></div>
+      <div class="gantt-row"><div class="lbl">⑦ 研修・本番公開</div><div class="bar-wrap"><div class="bar coral" style="left:83%;width:16%">研修・本番公開</div></div></div>
+    </div>
+    <div class="notes">
+      <h4>進め方のポイント</h4>
+      <ul>
+        <li>要件定義とフロントエンド／バックエンドは並行で進める（ウォーターフォール型でもアジャイル型でもないハイブリッド型）</li>
+        <li>要件定義フェーズ後半（4/25〜）から FE Phase1 を開始し、実際に操作できるプロトタイプを作りながら現場フィードバックを回していく</li>
+        <li>本番稼働開始は 2026 年 8 月頭</li>
+      </ul>
+    </div>
+    <div class="banner ink">本日は特に、このロードマップの「要件定義フェーズ」を進めるための推進体制について合意をいただきます</div>
+  </section>
+
+  <!-- ─── 4: BEFORE (revised) ─── -->
+  <section class="sec" id="s4">
+    <div class="sec-head"><span class="num">04</span><h2>現体制の構造（Before）</h2></div>
+    <div class="org-block">
+      <div>
+        <div class="title-pill">体制図</div>
+        <svg class="org-svg" viewBox="0 0 540 400" preserveAspectRatio="xMidYMid meet">
+          <!-- 田川さん (top center) -->
+          <rect x="210" y="10" width="120" height="50" rx="6" fill="#fff" stroke="#1c2b4a" stroke-width="2"/>
+          <text x="270" y="32" text-anchor="middle" font-size="13" font-weight="700" fill="#1c2b4a">田川さん</text>
+          <text x="270" y="48" text-anchor="middle" font-size="10" fill="#6b7891">最上位・管理</text>
+
+          <!-- 田川 → 木村 (直系) -->
+          <line x1="270" y1="60" x2="270" y2="100" stroke="#1c2b4a" stroke-width="1.5"/>
+
+          <!-- 田川 → 早苗 (右側を回り込む subtle line) -->
+          <path d="M 330 35 L 495 35 L 495 220" fill="none" stroke="#1c2b4a" stroke-width="1.2" opacity="0.35" stroke-dasharray="3 3"/>
+
+          <!-- 木村さん (中間層、田川の真下) -->
+          <rect x="200" y="100" width="140" height="50" rx="6" fill="#fff" stroke="#1c2b4a" stroke-width="2"/>
+          <text x="270" y="122" text-anchor="middle" font-size="13" font-weight="700" fill="#1c2b4a">木村さん（PM）</text>
+          <text x="270" y="138" text-anchor="middle" font-size="10" fill="#6b7891">中間層</text>
+
+          <!-- 介在 label -->
+          <text x="305" y="193" font-size="11" font-weight="700" fill="#e8604d">介在</text>
+
+          <!-- 木村 intercept arrow (red dashed, 垂直下向き) -->
+          <line x1="270" y1="150" x2="270" y2="223" stroke="#e8604d" stroke-width="2.5" stroke-dasharray="5 4"/>
+          <polygon points="263,219 277,219 270,233" fill="#e8604d"/>
+
+          <!-- 本来の実務ライン (水平の teal dashed) -->
+          <line x1="180" y1="245" x2="360" y2="245" stroke="#4fb3b0" stroke-width="3" stroke-dasharray="7 5"/>
+          <text x="270" y="296" text-anchor="middle" font-size="11" font-weight="700" fill="#4fb3b0">本来の実務ライン（JG ⇔ 早苗さんで直接協議すべき）</text>
+
+          <!-- X block marker on the work line -->
+          <circle cx="270" cy="245" r="18" fill="#e8604d" stroke="#fff" stroke-width="3"/>
+          <text x="270" y="253" text-anchor="middle" font-size="20" font-weight="900" fill="#fff">✕</text>
+          <text x="270" y="273" text-anchor="middle" font-size="9.5" font-weight="700" fill="#e8604d">遮断</text>
+
+          <!-- JG (bottom-left) -->
+          <rect x="30" y="220" width="150" height="50" rx="6" fill="#fff" stroke="#1c2b4a" stroke-width="2"/>
+          <text x="105" y="242" text-anchor="middle" font-size="12" font-weight="700" fill="#1c2b4a">ジャングルジム</text>
+          <text x="105" y="258" text-anchor="middle" font-size="11" fill="#1c2b4a">（浅津・千葉）</text>
+
+          <!-- 早苗さん (bottom-right, 同じ y 軸) -->
+          <rect x="360" y="220" width="150" height="50" rx="6" fill="#fff" stroke="#1c2b4a" stroke-width="2"/>
+          <text x="435" y="242" text-anchor="middle" font-size="13" font-weight="700" fill="#1c2b4a">早苗さん</text>
+          <text x="435" y="258" text-anchor="middle" font-size="10" fill="#6b7891">現場責任者</text>
+
+          <!-- 早苗 → 現場 vertical -->
+          <line x1="435" y1="270" x2="435" y2="325" stroke="#1c2b4a" stroke-width="1.5"/>
+
+          <!-- 現場 -->
+          <rect x="360" y="325" width="150" height="45" rx="6" fill="#fff" stroke="#1c2b4a" stroke-width="2"/>
+          <text x="435" y="352" text-anchor="middle" font-size="13" font-weight="700" fill="#1c2b4a">現場</text>
+        </svg>
+        <div class="legend-note">※ 田川さんは木村さん・早苗さんの両方を管理（最上位の承認者）</div>
+      </div>
+      <div class="argue">
+        <h4>構造的な論点</h4>
+        <ul>
+          <li><b>承認者と承認ルートが一致しない</b> — 事業・現場・UX を最も把握している早苗さんが本来の最終承認者だが、承認判断に至るまで PM レイヤーの論点整理を経由する構造になっている</li>
+          <li><b>承認プロセスが二重化する</b> — 早苗さんが下した承認判断に対しても PM レイヤーから再検討要請が挟まり、JG 側にも「何を・誰が承認する場か」が毎回再定義される。意思決定の所在が曖昧化する</li>
+          <li class="keep">確認・承認が多段化し、意思決定のリードタイムが伸びる</li>
+          <li><b>フェーズ2で求められるスキルと中間層のスキルが構造的にズレる</b> — 要件定義は「現場の微細な違和感」の即時反映が肝。中間層を経ると鮮度が落ちる</li>
+        </ul>
+      </div>
+    </div>
+    <div class="banner coral">個人の能力ではなく、フェーズに対する体制の適合度の話です</div>
+  </section>
+
+  <!-- ─── 5: AFTER (revised) ─── -->
+  <section class="sec" id="s5">
+    <div class="sec-head"><span class="num">05</span><h2>提案する新体制（After）</h2></div>
+    <div class="org-block reverse">
+      <div>
+        <div class="title-pill">体制図</div>
+        <svg class="org-svg" viewBox="0 0 540 320" preserveAspectRatio="xMidYMid meet">
+          <!-- 承認・横断ライン label -->
+          <text x="205" y="26" text-anchor="middle" font-size="11" font-weight="700" fill="#4fb3b0">【承認・横断ライン】</text>
+
+          <!-- 早苗さん (top-center-left) -->
+          <rect x="115" y="38" width="180" height="54" rx="6" fill="#fff" stroke="#1c2b4a" stroke-width="2"/>
+          <text x="205" y="60" text-anchor="middle" font-size="14" font-weight="700" fill="#1c2b4a">早苗さん</text>
+          <text x="205" y="80" text-anchor="middle" font-size="11" fill="#6b7891">事業責任者・最終承認</text>
+
+          <!-- Dotted line to 田川 -->
+          <line x1="295" y1="65" x2="345" y2="65" stroke="#1c2b4a" stroke-width="1.5" stroke-dasharray="3 3"/>
+
+          <!-- 田川さん (top-right) -->
+          <rect x="345" y="42" width="150" height="48" rx="6" fill="#fff" stroke="#1c2b4a" stroke-width="2"/>
+          <text x="420" y="62" text-anchor="middle" font-size="12" font-weight="700" fill="#1c2b4a">田川さん</text>
+          <text x="420" y="78" text-anchor="middle" font-size="10" fill="#6b7891">月次大枠レポート</text>
+
+          <!-- 実務ライン label -->
+          <text x="260" y="175" text-anchor="middle" font-size="11" font-weight="700" fill="#e8604d">【実務ライン・直接】</text>
+
+          <!-- Lines from 早苗 down to both -->
+          <line x1="160" y1="92" x2="105" y2="210" stroke="#1c2b4a" stroke-width="1.5"/>
+          <line x1="250" y1="92" x2="415" y2="210" stroke="#1c2b4a" stroke-width="1.5"/>
+
+          <!-- JG (bottom-left) -->
+          <rect x="25" y="210" width="160" height="58" rx="6" fill="#fff" stroke="#1c2b4a" stroke-width="2"/>
+          <text x="105" y="234" text-anchor="middle" font-size="13" font-weight="700" fill="#1c2b4a">ジャングルジム</text>
+          <text x="105" y="254" text-anchor="middle" font-size="11" fill="#1c2b4a">（浅津・千葉）</text>
+
+          <!-- 現場担当者 -->
+          <rect x="335" y="210" width="170" height="58" rx="6" fill="#fff" stroke="#1c2b4a" stroke-width="2"/>
+          <text x="420" y="234" text-anchor="middle" font-size="13" font-weight="700" fill="#1c2b4a">現場担当者</text>
+          <text x="420" y="254" text-anchor="middle" font-size="11" fill="#1c2b4a">（永井・榊・内村）</text>
+
+          <!-- Direct coral line between JG and 現場担当者 -->
+          <line x1="185" y1="239" x2="335" y2="239" stroke="#e8604d" stroke-width="4"/>
+          <polygon points="331,232 331,246 343,239" fill="#e8604d"/>
+          <polygon points="189,232 189,246 177,239" fill="#e8604d"/>
+        </svg>
+        <div class="excluded-box">
+          <div class="tag">※ 今回の要件定義・実装ラインから外れるメンバー</div>
+          <div class="item">
+            <span class="name">木村さん</span>
+            <span class="note">フェーズ1で合理性詰めに貢献完了（議論収束の必要性が発生したら登場）</span>
+          </div>
+        </div>
+      </div>
+      <div class="argue">
+        <h4>変更のポイント</h4>
+        <ul>
+          <li><b>実務ラインを JG ⇔ 現場 に直結</b> — 中間層を挟まず、現場の違和感・UX 指摘を即日プロトタイプに反映できる</li>
+          <li><b>最終承認ラインを早苗さんに一本化</b> — 事業全体・現場・UX を最も把握している早苗さんが承認者。承認プロセスの二重化・論点再定義を構造的に排除する</li>
+          <li><b>田川さんへは月次で大枠レポート</b> — マイルストーン・リスク・大枠進捗など、経営視点での承認判断に集中いただく</li>
+          <li><b>木村さんはフェーズ1で合理性詰めに貢献いただいたが、フェーズ2は実務解像度が主軸となるため今回のラインからは外れていただく</b></li>
+        </ul>
+      </div>
+    </div>
+    <div class="banner teal">ラインを短く、判断軸を事業責任者に集約します</div>
+  </section>
+
+  <!-- ─── 6 ─── -->
+  <section class="sec" id="s6">
+    <div class="sec-head"><span class="num">06</span><h2>各メンバーの役割再定義</h2></div>
+    <table class="t">
+      <thead><tr><th style="width:18%">メンバー</th><th style="width:28%">役割</th><th>主な活動</th></tr></thead>
+      <tbody>
+        <tr><td>永井さん</td><td>管理者代表</td><td>管理者視点の要件 FB</td></tr>
+        <tr><td>榊さん</td><td>ユーザー／サービス担当者</td><td>両視点からの FB</td></tr>
+        <tr><td>内村さん</td><td>サービス担当者</td><td>サービス視点の FB</td></tr>
+        <tr><td>早苗さん</td><td>事業責任者</td><td>横断承認・意思決定・週次定例</td></tr>
+        <tr><td>田川さん</td><td>経営承認</td><td>月次レポート受領・大枠判断</td></tr>
+        <tr><td>飯田さん</td><td>全体補佐</td><td>全体把握・早苗さんサポート</td></tr>
+        <tr class="lead"><td>浅津・千葉</td><td>プロジェクトリード</td><td>要件定義・推進・プロトタイプ</td></tr>
+        <tr class="out"><td>木村さん</td><td>フェーズ1で貢献完了</td><td>今回の要件定義・実装ラインからは外れる（議論収束の必要性が発生したら登場）</td></tr>
+      </tbody>
+    </table>
+    <div class="banner teal">責任と判断の所在を明確にし、意思決定の往復を最小化します</div>
+  </section>
+
+  <!-- ─── 7 ─── -->
+  <section class="sec" id="s7">
+    <div class="sec-head"><span class="num">07</span><h2>要件定義ヒアリングスケジュール</h2></div>
+    <table class="t">
+      <thead><tr><th style="width:32%">日時</th><th style="width:28%">対象視点</th><th>参加者</th></tr></thead>
+      <tbody>
+        <tr><td>4/20（月）11:00 – 12:30</td><td>管理者</td><td>永井・堀内</td></tr>
+        <tr><td>4/22（水）12:00 – 13:30</td><td>ユーザー</td><td>榊・堀内</td></tr>
+        <tr><td>4/22（水）13:45 – 15:00</td><td>サービス担当者</td><td>榊・内村</td></tr>
+        <tr><td>4/23（木）14:30 – 16:00</td><td>クライアント</td><td style="color:var(--coral);font-weight:700">未定</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="margin-top:24px;font-size:17px;font-weight:900;color:var(--ink)">進め方</h3>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="icon">📱</div>
+        <div class="txt">実際のアプリ操作を見せていただき、<br>客観的に課題を発見する</div>
+        <div class="note">「課題ありますか？」ではなく、<br>操作観察で潜在課題を引き出す</div>
+      </div>
+      <div class="flow-arrow">▶</div>
+      <div class="flow-step">
+        <div class="icon">🎙</div>
+        <div class="txt">録音・整理</div>
+        <div class="note">発言を構造化し、論点に集約</div>
+      </div>
+      <div class="flow-arrow">▶</div>
+      <div class="flow-step">
+        <div class="icon">🧩</div>
+        <div class="txt">プロトタイプに即反映</div>
+        <div class="note">次のヒアリングまでに<br>触れる状態で戻す</div>
+      </div>
+    </div>
+    <div class="banner coral">現場の解像度を直接吸い上げ、高速にプロトタイプへ反映します</div>
+  </section>
+
+  <!-- ─── 8 ─── -->
+  <section class="sec" id="s8">
+    <div class="sec-head"><span class="num">08</span><h2>レポーティング設計</h2></div>
+    <div class="rep-grid">
+      <svg class="pyramid-svg" viewBox="0 0 320 320">
+        <polygon points="160,30 210,110 110,110" fill="#fff" stroke="#1c2b4a" stroke-width="2"/>
+        <text x="160" y="88" text-anchor="middle" font-size="14" font-weight="700" fill="#1c2b4a">田川さん</text>
+        <text x="160" y="102" text-anchor="middle" font-size="10" fill="#6b7891">月次</text>
+
+        <polygon points="210,110 260,200 60,200 110,110" fill="#eaf5f4" stroke="#1c2b4a" stroke-width="2"/>
+        <text x="160" y="160" text-anchor="middle" font-size="14" font-weight="700" fill="#1c2b4a">早苗さん</text>
+        <text x="160" y="176" text-anchor="middle" font-size="10" fill="#1c2b4a">週次・隔週</text>
+
+        <polygon points="260,200 310,300 10,300 60,200" fill="#fff" stroke="#1c2b4a" stroke-width="2"/>
+        <text x="160" y="250" text-anchor="middle" font-size="14" font-weight="700" fill="#1c2b4a">現場担当者</text>
+        <text x="160" y="268" text-anchor="middle" font-size="10" fill="#1c2b4a">都度（Slack・MTG）</text>
+      </svg>
+      <table class="t">
+        <thead><tr><th>相手</th><th>頻度</th><th>内容</th></tr></thead>
+        <tbody>
+          <tr><td>田川さん</td><td>月次レポート</td><td>大枠進捗・リスク・マイルストーン達成状況</td></tr>
+          <tr><td>早苗さん</td><td>週次 or 隔週定例</td><td>進捗・意思決定事項</td></tr>
+          <tr><td>現場担当者</td><td>都度（Slack・MTG）</td><td>要件 FB・プロト確認</td></tr>
+          <tr><td style="color:var(--teal);font-weight:700">飯田さん</td><td>早苗さん経由で共有</td><td>全体状況の把握</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="banner teal">情報量を役割に応じて最適化。全員が必要な粒度で把握できる状態にします</div>
+  </section>
+
+  <!-- ─── 9 ─── -->
+  <section class="sec" id="s9">
+    <div class="sec-head"><span class="num">09</span><h2>本日お願いしたい合意事項</h2></div>
+    <p class="sec-intro">フェーズ移行に伴う新体制への移行合意</p>
+
+    <div class="agree">
+      <div class="mark">✓</div>
+      <div>
+        <div class="tag">コミュニケーションライン</div>
+        <div class="body">早苗さんを事業責任者・最終承認ラインとする</div>
+      </div>
+    </div>
+    <div class="agree">
+      <div class="mark">✓</div>
+      <div>
+        <div class="tag">コミュニケーションライン</div>
+        <div class="body">田川さんへは月次で大枠レポートをお送りする</div>
+      </div>
+    </div>
+    <div class="agree">
+      <div class="mark">✓</div>
+      <div>
+        <div class="tag">体制変更</div>
+        <div class="body">今回の要件定義・実装ラインから木村さんを外させていただく</div>
+      </div>
+    </div>
+
+    <div class="banner ink">全員が「成功するプロダクトのリリース」という一点に向けて最短距離で動く体制にしたい、というご相談です</div>
+  </section>
+
+  <footer style="margin-top:80px;padding-top:24px;border-top:1px solid var(--line);color:var(--sub);font-size:12px;text-align:center">
+    2026-04-17 / ジャングルジム株式会社
+  </footer>
+
+</main>
+
+</body>
+</html>
